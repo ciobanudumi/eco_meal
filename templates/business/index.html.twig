@@ -1,0 +1,69 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Business Index{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+
+        <div class="card shadow-sm border-0">
+            <div class="card-header text-dark fw-bold d-flex justify-content-between align-items-center"
+                 style="background-color: #c9eb34;">
+                <h2 class="mb-0">Businesses</h2>
+
+                <a href="{{ path('app_business_new') }}" class="btn btn-light fw-semibold">
+                    + Create New
+                </a>
+            </div>
+
+            <div class="card-body bg-white">
+
+                <table class="table table-hover align-middle">
+                    <thead style="background-color: #c9eb34;">
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>City</th>
+                        <th>Street</th>
+                        <th>House No.</th>
+                        <th>Phone</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    {% for business in businesses %}
+                        <tr>
+                            <td>{{ business.id }}</td>
+                            <td class="fw-semibold">{{ business.name }}</td>
+                            <td>{{ business.city }}</td>
+                            <td>{{ business.street }}</td>
+                            <td>{{ business.houseNumber }}</td>
+                            <td>{{ business.phoneNumber }}</td>
+                            <td class="text-center">
+                                <a href="{{ path('app_business_show', {'id': business.id}) }}"
+                                   class="btn btn-sm btn-outline-success me-2">
+                                    Show
+                                </a>
+
+                                <a href="{{ path('app_business_edit', {'id': business.id}) }}"
+                                   class="btn btn-sm text-dark"
+                                   style="background-color:#c9eb34;">
+                                    Edit
+                                </a>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="7" class="text-center py-4 text-muted">
+                                No businesses found.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+
+    </div>
+{% endblock %}

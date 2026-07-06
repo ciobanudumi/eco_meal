@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit BusinessType{% endblock %}
+
+{% block body %}
+    <h1>Edit BusinessType</h1>
+
+    {{ include('business_type/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_business_type_index') }}">back to list</a>
+
+    {{ include('business_type/_delete_form.html.twig') }}
+{% endblock %}

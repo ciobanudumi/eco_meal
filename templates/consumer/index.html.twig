@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consumer index{% endblock %}
+
+{% block body %}
+    <h1>Consumer index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>First_name</th>
+                <th>Last_name</th>
+                <th>Phone_number</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for consumer in consumers %}
+            <tr>
+                <td>{{ consumer.id }}</td>
+                <td>{{ consumer.firstName }}</td>
+                <td>{{ consumer.lastName }}</td>
+                <td>{{ consumer.phoneNumber }}</td>
+                <td>
+                    <a href="{{ path('app_consumer_show', {'id': consumer.id}) }}">show</a>
+                    <a href="{{ path('app_consumer_edit', {'id': consumer.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_consumer_new') }}">Create new</a>
+{% endblock %}
