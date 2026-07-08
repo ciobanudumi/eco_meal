@@ -7,6 +7,7 @@ use App\Form\ConsumerType;
 use App\Repository\ConsumerRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -43,11 +44,17 @@ final class ConsumerController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_consumer_show', methods: ['GET'])]
-    public function show(Consumer $consumer): Response
+    public function show(Consumer $consumer, Security $security): Response
     {
-        return $this->render('consumer/show.html.twig', [
-            'consumer' => $consumer,
-        ]);
+        $user = $security->getUser();
+
+        if (($user && $user->getConsumer() && $user->getConsumer()->getId() == $consumer->getId()) || $user->getRoles()[0] == 'ROLE_ADMIN') {
+            return $this->render('consumer/show.html.twig', [
+                'consumer' => $consumer,
+            ]);
+        }
+
+        return $this->redirectToRoute('app_package_index');
     }
 
     #[Route('/{id}/edit', name: 'app_consumer_edit', methods: ['GET', 'POST'])]

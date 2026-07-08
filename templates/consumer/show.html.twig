@@ -30,5 +30,7 @@
 
     <a href="{{ path('app_consumer_edit', {'id': consumer.id}) }}">edit</a>
 
-    {{ include('consumer/_delete_form.html.twig') }}
+    {% if is_granted('ROLE_ADMIN') %}
+        {{ include('consumer/_delete_form.html.twig') }}
+    {% endif %}
 {% endblock %}
